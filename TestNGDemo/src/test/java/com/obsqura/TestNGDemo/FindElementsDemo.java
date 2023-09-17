@@ -30,39 +30,26 @@ public class FindElementsDemo extends BaseDemo{
 	}
 	}
 	@Test
-	public void TableSample() 
+	public void verifyTheadOrderOfTheTable() 
 	{
 		driver.navigate().to("https://selenium.obsqurazone.com/table-pagination.php");
-		List <WebElement> header=driver.findElements(By.xpath("//tr[contains(@role,'row')]//th"));
-		List <String> rows=new ArrayList<String>();
-		rows.add("Name");
-		rows.add("Position");
-		rows.add("Office");
-		rows.add("Age");
-		rows.add("Start date");
-		rows.add("Salary");
-		System.out.println(rows);
-		for(WebElement row:header)
+		List <String> expectedThead=new ArrayList<String>();
+		expectedThead.add("Name");
+		expectedThead.add("Position");
+		expectedThead.add("Office");
+		expectedThead.add("Age");
+		expectedThead.add("Start date");
+		expectedThead.add("Salary");
+		String expectedTheadOrder=String.join(" ", expectedThead);  
+		List <WebElement> header=driver.findElements(By.xpath("//table[@id='dtBasicExample']//following-sibling::thead"));
+		for(WebElement theadOrder:header)
 		{
-		String expectedHeaderOrder=row.getText();
+		String actualHeaderOrder=theadOrder.getText();
+		Assert.assertEquals(actualHeaderOrder, expectedTheadOrder,"The rows are not in correct order");
 		
-		if(expectedHeaderOrder.equals(rows))
-			{
-				System.out.println("The rows are in correct order");
-			}
-			else
-			{
-				System.out.println("The rows are not in correct order");
-
-			}
-		{
-		}	
 		}
-		}
-
-
-	
-	@Test
+	}
+		@Test
 	public void verifyName()
 	{
 		String expectedValue="Ashton Cox";
